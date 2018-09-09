@@ -1,0 +1,9 @@
+export const PIN_ADDED = "pin_added";
+export const CATEGORY_LOADED = "category_loaded";
+export const RESTAURANT_LOADED = "restaurant_loaded";
+export const ORDER = "order";
+export const ADD_TO_CART = "add_to_cart";
+export const CLEAR_CART = "clear_cart";
+export const REMOVE_FROM_CART = "remove_from_cart";
+export const SHOW_POPUP = "show_popup";
+export const CONFIRM_POPUP = "confirm_popup";
