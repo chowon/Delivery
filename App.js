@@ -1,30 +1,93 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { createBottomTabNavigator, createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation'; //createMaterialTopTabNavigator
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/es/integration/react';
+import { Icon } from 'react-native-elements';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import configureStore from './store'
+import store from './store';
+import LaunchScreen from './screens/LaunchScreen';
+import AuthScreen from './screens/AuthScreen';
+import CartScreen from './screens/CartScreen';
+import HomeScreen from './screens/HomeScreen';
+import OrderScreen from './screens/OrderScreen';
+import PinScreen from './screens/PinScreen';
+import RecommendScreen from './screens/RecommendScreen';
+import RestaurantScreen from './screens/RestaurantScreen';
+import RestaurantsScreen from './screens/RestaurantsScreen';
 
-type Props = {};
-export default class App extends Component<Props> {
+class App extends Component {
   render() {
+    const { persistor, store } = configureStore();
+    const MainNavigator = createBottomTabNavigator({
+      home: createStackNavigator({
+        home: { screen: HomeScreen },
+        restaurants: createMaterialTopTabNavigator({
+          // restaurants1: { screen: RestaurantScreen },
+          // restaurants2: { screen: RestaurantScreen },
+          // restaurants3: { screen: RestaurantScreen },
+          // restaurants4: { screen: RestaurantScreen },
+          restaurants1: { screen: ({ navigation }) => { return <RestaurantsScreen navigation={navigation} id={'1'} /> },
+            navigationOptions: ({navigation}) => {
+              return { title: (navigation.state.params && navigation.state.params.title ? navigation.state.params.title : '' ) }
+            },
+          },
+          restaurants2: { screen: ({ navigation }) => { return <RestaurantsScreen navigation={navigation} id={'2'} /> },
+            navigationOptions: ({navigation}) => {
+              return { title: (navigation.state.params && navigation.state.params.title ? navigation.state.params.title : '' ) }
+            },
+          },
+          restaurants3: { screen: ({ navigation }) => { return <RestaurantsScreen navigation={navigation} id={'3'} /> },
+            navigationOptions: ({navigation}) => {
+              return { title: (navigation.state.params && navigation.state.params.title ? navigation.state.params.title : '' ) }
+            },
+          },
+          restaurants4: { screen: ({ navigation }) => { return <RestaurantsScreen navigation={navigation} id={'4'} /> },
+            navigationOptions: ({navigation}) => {
+              return { title: (navigation.state.params && navigation.state.params.title ? navigation.state.params.title : '' ) }
+            },
+          },
+        }),
+        restaurant: {
+          screen: RestaurantScreen,
+          navigationOptions: ({navigation}) => {
+            return { title: (navigation.state.params && navigation.state.params.title ? navigation.state.params.title : '' ) }
+          }
+        }
+      }),
+
+      cart: createStackNavigator({
+        cart: { screen: CartScreen },
+        order: { screen: OrderScreen }
+      }),
+      pin: createStackNavigator({
+        pin: { screen: PinScreen }
+      }),
+      recommend: createStackNavigator({
+        recommend: { screen: RecommendScreen }
+      })
+    });
+
+    const RootNavigator = createBottomTabNavigator({
+      launch: { screen: LaunchScreen },
+      auth: { screen: AuthScreen },
+      main: MainNavigator
+    }, {
+      navigationOptions: {
+        tabBarVisible: false
+      },
+      lazy: true
+    });
+
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <View style={styles.container}>
+            <RootNavigator />
+          </View>
+        </PersistGate>
+      </Provider>
     );
   }
 }
@@ -33,17 +96,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
 });
+
+export default App;

@@ -7,3 +7,4 @@ export const CLEAR_CART = "clear_cart";
 export const REMOVE_FROM_CART = "remove_from_cart";
 export const SHOW_POPUP = "show_popup";
 export const CONFIRM_POPUP = "confirm_popup";
+export const LOGGED_IN = "logged_in";

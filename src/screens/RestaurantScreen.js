@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, Alert } from 'react-native';
+import { View, Text, FlatList, Alert, StyleSheet } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
@@ -18,6 +18,12 @@ class RestaurantScreen extends Component {
     };
   };
 
+  constructor(props) {
+    super(props);
+    this.alertShowing = false;
+  }
+
+
 
   componentWillMount() {
     this.props.navigation.setParams({onRightButtonPress: this.onRightButtonPress })
@@ -28,6 +34,10 @@ class RestaurantScreen extends Component {
   }
 
   componentDidUpdate() {
+
+  }
+
+  onRightButtonPress = () => {
     this.props.addPin(this.props.navigation.getParam('restaurant'));
   }
 
@@ -59,19 +69,6 @@ class RestaurantScreen extends Component {
     );
   }
 
-  renderPopup = () => {
-    if (this.props.popup) {
-      Alert.alert(
-        `${this.props.popup}`,
-        "",
-        [
-          {text: '확인', onPress: () => this.props.confirmPopup(), style: 'cancel'},
-        ],
-        { cancelable: false }
-      )
-    }
-  }
-
   render() {
     const restaurant = this.props.navigation.getParam('restaurant');
     return (
@@ -98,16 +95,12 @@ class RestaurantScreen extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   buttonStyle: {
     backgroundColor: '#0288D1',
     marginTop: 15,
     marginBottom: 15
   }
-}
+})
 
-function mapStateToProps({popup}) {
-  return { popup: popup.msg }
-}
-
-export default connect(mapStateToProps, actions)(RestaurantScreen);
+export default connect(null, actions)(RestaurantScreen);

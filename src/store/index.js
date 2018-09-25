@@ -8,7 +8,7 @@ const config = {
   key: 'root',
   version: 1,
   storage: AsyncStorage,
-  whitelist: ['pin', 'restaurants', 'category', 'cart']
+  whitelist: ['pin', 'restaurants', 'category', 'cart', 'loggedIn']
 };
 
 const asyncDispatchMiddleware = store => next => action => {

@@ -7,6 +7,8 @@ import { Icon } from 'react-native-elements';
 
 import configureStore from './store'
 import store from './store';
+import LaunchScreen from './screens/LaunchScreen';
+import AuthScreen from './screens/AuthScreen';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import OrderScreen from './screens/OrderScreen';
@@ -67,11 +69,22 @@ class App extends Component {
       })
     });
 
+    const RootNavigator = createBottomTabNavigator({
+      launch: { screen: LaunchScreen },
+      auth: { screen: AuthScreen },
+      main: MainNavigator
+    }, {
+      navigationOptions: {
+        tabBarVisible: false
+      },
+      lazy: true
+    });
+
     return (
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <View style={styles.container}>
-            <MainNavigator />
+            <RootNavigator />
           </View>
         </PersistGate>
       </Provider>

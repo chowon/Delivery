@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, Alert } from 'react-native';
+import { View, Text, FlatList, Alert, StyleSheet } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -24,8 +24,9 @@ class CartScreen extends Component {
   componentWillMount() {
     this.props.navigation.setParams({onRightButtonPress: this.onRightButtonPress })
   }
+
   componentDidUpdate() {
-    this.renderPopup();
+
   }
 
   onRightButtonPress = () => {
@@ -45,18 +46,6 @@ class CartScreen extends Component {
     )
   }
 
-  renderPopup = () => {
-    if (this.props.popup) {
-      Alert.alert(
-        `${this.props.popup}`,
-        "",
-        [
-          {text: '확인', onPress: () => this.props.confirmPopup(), style: 'cancel'},
-        ],
-        { cancelable: false }
-      )
-    }
-  }
 
   renderItem = ({ item }) => {
     return (
@@ -69,7 +58,6 @@ class CartScreen extends Component {
   }
 
   render() {
-
     return (
       <List>
         <FlatList
@@ -88,16 +76,16 @@ class CartScreen extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   buttonStyle: {
     backgroundColor: '#0288D1',
     marginTop: 15,
     marginBottom: 15
   }
-}
+})
 
-function mapStateToProps({ cart, popup }) {
-  return { menus: cart.menus, popup: popup.msg }
+function mapStateToProps({ cart }) {
+  return { menus: cart.menus }
 }
 
 export default connect(mapStateToProps, actions)(CartScreen);

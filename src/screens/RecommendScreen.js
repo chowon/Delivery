@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Alert } from 'react-native';
+import { View, Text, Image, Alert, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Card } from 'react-native-elements';
 import Swipe from '../components/Swipe';
@@ -79,7 +79,7 @@ class RecommendScreen extends Component {
 
   render() {
     return (
-      <View style={{ marginTop: 10 }}>
+      <View style={{ marginTop: 40 }}>
         <Text style={{ textAlign: "center"}}>
           좋아하면 오른쪽, 싫어하면 왼쪽으로 스와이프 해주세요
         </Text>
@@ -96,13 +96,13 @@ class RecommendScreen extends Component {
 }
 // onSwipeRight={job => this.props.likeJob(job)}
 //renderNoMoreCards={this.renderNoMoreCards.bind(this)}
-const styles = {
+const styles = StyleSheet.create({
   detailWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: 10
   }
-}
+})
 
 function mapStateToProps({ restaurants }) {
   return { restaurants }

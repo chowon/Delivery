@@ -3,7 +3,7 @@ import category from './category_reducer';
 import restaurants from './restaurant_reducer';
 import cart from './cart_reducer';
 import popup from './popup_reducer';
-
+import loggedIn from './auth_reducer';
 export default ({
-  pin, category, restaurants, cart, popup
+  pin, category, restaurants, cart, popup, loggedIn
 });
